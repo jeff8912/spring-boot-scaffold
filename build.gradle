@@ -1,0 +1,56 @@
+buildscript {
+    ext {
+        //spring boot 版本
+        bootVersion = '2.4.0'
+    }
+
+    //私服地址，这个地址适用于gradle自身，比如删除，下面的springboot插件就会找不到
+    repositories {
+        maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
+    }
+
+    //springboot gradle插件配置
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${bootVersion}")
+    }
+}
+
+
+allprojects {
+    group 'com.jeff'
+    version = '0.0.1-SNAPSHOT'
+
+    repositories {
+        maven {
+            url 'http://maven.aliyun.com/nexus/content/groups/public/'
+        }
+    }
+}
+
+subprojects {
+
+    apply plugin: 'io.spring.dependency-management'
+    apply plugin: 'java'
+
+    sourceCompatibility = 1.8
+
+    test {
+        useJUnitPlatform()
+    }
+
+    dependencyManagement {
+        imports {
+            mavenBom "org.springframework.boot:spring-boot-starter-parent:${bootVersion}"
+        }
+    }
+
+    dependencies {
+        compileOnly 'org.projectlombok:lombok'
+        annotationProcessor 'org.projectlombok:lombok'
+        testCompileOnly 'org.projectlombok:lombok'
+        testAnnotationProcessor 'org.projectlombok:lombok'
+        testCompileOnly 'org.springframework.boot:spring-boot-starter-test'
+    }
+}
+
+
