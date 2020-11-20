@@ -2,11 +2,12 @@ buildscript {
     ext {
         //spring boot 版本
         bootVersion = '2.4.0'
+        mavenUrl = 'http://maven.aliyun.com/nexus/content/groups/public/'
     }
 
     //私服地址，这个地址适用于gradle自身，比如删除，下面的springboot插件就会找不到
     repositories {
-        maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
+        maven { url "${mavenUrl}" }
     }
 
     //springboot gradle插件配置
@@ -22,13 +23,12 @@ allprojects {
 
     repositories {
         maven {
-            url 'http://maven.aliyun.com/nexus/content/groups/public/'
+            url "${mavenUrl}"
         }
     }
 }
 
 subprojects {
-
     apply plugin: 'io.spring.dependency-management'
     apply plugin: 'java'
 
@@ -52,5 +52,3 @@ subprojects {
         testCompileOnly 'org.springframework.boot:spring-boot-starter-test'
     }
 }
-
-
